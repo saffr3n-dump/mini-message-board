@@ -31,3 +31,13 @@ export const createGet = (_req, res) => {
     body: 'form',
   });
 };
+
+export const createPost = (req, res) => {
+  const { name, message } = req.body;
+  messages.push({
+    text: message,
+    user: name,
+    added: new Date(),
+  });
+  res.redirect('/');
+};
