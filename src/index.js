@@ -1,10 +1,9 @@
 import express from 'express';
+import indexRouter from './routers/index.js';
 
 const app = express();
 
-app.get('/', (_req, res) => {
-  res.send('Home Page');
-});
+app.use('/', indexRouter);
 
 const port = Number(process.env.PORT) || 3000;
 app.listen(port, (err) => {
