@@ -24,3 +24,10 @@ export const home = (_req, res) => {
     messages: msgs,
   });
 };
+
+export const createGet = (_req, res) => {
+  res.render('template', {
+    title: 'New Message',
+    body: 'form',
+  });
+};
