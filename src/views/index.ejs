@@ -1,13 +1,14 @@
 <h1><%= title %></h1>
 
 <div class="container">
-  <% messages.forEach((msg) => { %>
+  <% messages.forEach((msg, i) => { %>
     <div class="message">
       <div>
         <span><%= msg.user %></span>
         <span><%= msg.added %></span>
       </div>
       <p><%= msg.text %></p>
+      <a href="/messages/<%= i %>"><button>Open</button></a>
     </div>
   <% }) %>
 </div>

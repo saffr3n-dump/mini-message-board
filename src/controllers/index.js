@@ -41,3 +41,13 @@ export const createPost = (req, res) => {
   });
   res.redirect('/');
 };
+
+export const message = (req, res) => {
+  const original = messages[req.params.id];
+  const formatted = { ...original, added: formatDate(original.added) };
+  res.render('template', {
+    title: 'Message Info',
+    body: 'message',
+    message: formatted,
+  });
+};
