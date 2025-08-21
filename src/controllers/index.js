@@ -1,27 +1,15 @@
+import { getAllMessages, getOneMessage, createMessage } from '../db.js';
 import formatDate from '../utils/formatDate.js';
 
-const messages = [
-  {
-    text: 'Hi there!',
-    user: 'Amando',
-    added: new Date(),
-  },
-  {
-    text: 'Hello World!',
-    user: 'Charles',
-    added: new Date(),
-  },
-];
-
-export const home = (_req, res) => {
-  const msgs = messages.slice().map((msg) => {
+export const home = async (_req, res) => {
+  const messages = (await getAllMessages()).map((msg) => {
     msg.added = formatDate(msg.added);
     return msg;
   });
   res.render('template', {
     title: 'Mini Message Board',
     body: 'index',
-    messages: msgs,
+    messages,
   });
 };
 
@@ -32,22 +20,18 @@ export const createGet = (_req, res) => {
   });
 };
 
-export const createPost = (req, res) => {
+export const createPost = async (req, res) => {
   const { name, message } = req.body;
-  messages.push({
-    text: message,
-    user: name,
-    added: new Date(),
-  });
+  await createMessage(message, name, new Date());
   res.redirect('/');
 };
 
-export const message = (req, res) => {
-  const original = messages[req.params.id];
-  const formatted = { ...original, added: formatDate(original.added) };
+export const message = async (req, res) => {
+  const message = await getOneMessage(req.params.id);
+  message.added = formatDate(message.added);
   res.render('template', {
     title: 'Message Info',
     body: 'message',
-    message: formatted,
+    message,
   });
 };
